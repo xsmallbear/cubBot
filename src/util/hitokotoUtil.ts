@@ -18,7 +18,7 @@ interface HitokotoType {
 const hitokotoUtil = (): Promise<HitokotoType> => {
   return new Promise((resolve, reject) => {
     const options = {
-      hostname: "v1.hitokoto.cn",
+      hostname: "international.v1.hitokoto.cn",
       port: 80,
       path: "/",
       agent: false,
