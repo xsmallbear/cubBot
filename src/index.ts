@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 
 const getBot = (): Telegraf => {
-  const result = fs.readFileSync(path.join("TOKEN"), "utf-8");
+  const result = fs.readFileSync(path.join("TOKEN.data"), "utf-8");
   console.log("读取TOKEN为:" + result);
   return new Telegraf(result);
 };
