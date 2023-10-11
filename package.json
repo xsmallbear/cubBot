@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "bot":"./bin/bot.js"
+    "bot": "./bin/bot.js"
   },
   "scripts": {
     "dev": "nodemon ./src/index.ts",
-    "build":"tsc && npm link",
+    "build": "tsc && npm link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
