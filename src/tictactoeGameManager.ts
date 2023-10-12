@@ -27,8 +27,8 @@ export default class TictactoeGameManager {
         ctx.sendMessage("请在群里使用哦");
       }
       const game = this.addGame(ctx.chat.id, ctx.from);
-      if (game) {
-        this.printGame(ctx, game, true);
+      if (game && game) {
+        this.printGame(ctx, game);
       } else {
         ctx.sendMessage("当前没有游戏可以加入哦");
       }
@@ -63,12 +63,19 @@ export default class TictactoeGameManager {
             myGame.state !== "finish" &&
             ctx.from!.id === myGame.nextPlay.id
           ) {
-            myGame.setState(i);
-            this.printGame(ctx, myGame as TictactoeGame);
-            const win = myGame.checkWin();
-            if (win) {
-              this.deleteGame(ctx.chat.id, myGame);
-              ctx.sendMessage("游戏结束 胜利的是@" + win.username);
+            if (myGame.setState(i)) {
+              this.printGame(ctx, myGame as TictactoeGame);
+              const [over, winPlay] = myGame.checkGameOver();
+              if (over) {
+                this.deleteGame(ctx.chat.id, myGame);
+                if (winPlay) {
+                  ctx.sendMessage(`游戏结束了 胜利的是@${winPlay?.username}`);
+                } else {
+                  ctx.sendMessage("平局! 双方都很棒哦");
+                }
+              }
+            } else {
+              ctx.answerCbQuery();
             }
           } else {
             ctx.answerCbQuery();
@@ -164,14 +171,12 @@ export default class TictactoeGameManager {
     return keyboard;
   };
 
-  printGame = async (ctx: any, game: TictactoeGame, first = false) => {
-    let message = "";
-    if (first) {
-      message += "开始游戏\n";
-    }
-    message += `玩家1:\t@${game.play1.username}\n`;
-    message += `玩家2:\t@${game.play2.username}\n`;
-    message += `当前行动的是:\t@${game.nextPlay.username}\n`;
+  printGame = async (ctx: any, game: TictactoeGame) => {
+    let message = "----------------游戏信息----------------\n";
+    message += `P1:\t@${game.play1.username}\n`;
+    message += `P2:\t@${game.play2.username}\n`;
+    message += "---------------------------------------------\n";
+    message += `CURRT:\t@${game.play2.username}\n`;
     if (game.preTelegramMessage) {
       ctx.deleteMessage(game.preTelegramMessage.message_id);
     }

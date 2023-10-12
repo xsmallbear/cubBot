@@ -44,7 +44,13 @@ export default class TictactoeGame {
     }
     return false;
   }
-  checkWin() {
+  checkGameOver(): [over: boolean, winPlay: User | undefined] {
+    //平局
+    if (this.checkerboard.indexOf(" ") < 0) {
+      this.state = "finish";
+      return [true, undefined];
+    }
+
     let currentFlag = " ";
     let play;
     //
@@ -64,7 +70,7 @@ export default class TictactoeGame {
         this.checkerboard[i * 3 + 2] === currentFlag
       ) {
         this.state = "finish";
-        return play;
+        return [true, play];
       }
     }
     for (let i = 0; i < 3; i++) {
@@ -74,7 +80,7 @@ export default class TictactoeGame {
         this.checkerboard[i + 6] === currentFlag
       ) {
         this.state = "finish";
-        return play;
+        return [true, play];
       }
     }
     if (
@@ -83,7 +89,7 @@ export default class TictactoeGame {
       this.checkerboard[8] === currentFlag
     ) {
       this.state = "finish";
-      return play;
+      return [true, play];
     }
     if (
       this.checkerboard[2] === currentFlag &&
@@ -91,8 +97,8 @@ export default class TictactoeGame {
       this.checkerboard[6] === currentFlag
     ) {
       this.state = "finish";
-      return play;
+      return [true, play];
     }
-    return undefined;
+    return [false, undefined];
   }
 }
