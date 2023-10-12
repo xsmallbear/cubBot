@@ -13,6 +13,7 @@ export default class TictactoeGameManager {
     bot.command("new_tictactoe", async (ctx) => {
       if (this.checkIsGroup(ctx) == false) {
         ctx.sendMessage("请在群里使用哦");
+        return;
       }
       if (this.createGame(ctx.chat.id, ctx.from)) {
         ctx.sendMessage(
@@ -25,6 +26,7 @@ export default class TictactoeGameManager {
     bot.command("join_tictactoe", async (ctx) => {
       if (this.checkIsGroup(ctx) == false) {
         ctx.sendMessage("请在群里使用哦");
+        return;
       }
       const game = this.addGame(ctx.chat.id, ctx.from);
       if (game && game) {
