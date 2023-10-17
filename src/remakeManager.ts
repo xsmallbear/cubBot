@@ -253,8 +253,10 @@ export default class RemakeManager {
 
   constructor(bot: Telegraf) {
     this.bot = bot;
+  }
 
-    bot.command("remake", (ctx) => {
+  command() {
+    this.bot.command("remake", (ctx) => {
       const index = numberRadom(0, this.countrys.length - 1);
       ctx.reply(`你自杀成功了,转生到了${this.countrys[index]}`);
     });

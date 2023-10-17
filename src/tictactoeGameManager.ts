@@ -10,7 +10,10 @@ export default class TictactoeGameManager {
 
   constructor(bot: Telegraf) {
     this.bot = bot;
-    bot.command("new_tictactoe", async (ctx) => {
+  }
+
+  command() {
+    this.bot.command("new_tictactoe", async (ctx) => {
       if (this.checkIsGroup(ctx) == false) {
         ctx.sendMessage("请在群里使用哦");
         return;
@@ -23,7 +26,7 @@ export default class TictactoeGameManager {
         ctx.sendMessage("创建游戏失败 你已经有一个创建的游戏了哦");
       }
     });
-    bot.command("join_tictactoe", async (ctx) => {
+    this.bot.command("join_tictactoe", async (ctx) => {
       if (this.checkIsGroup(ctx) == false) {
         ctx.sendMessage("请在群里使用哦");
         return;
@@ -35,7 +38,7 @@ export default class TictactoeGameManager {
         ctx.sendMessage("当前没有游戏可以加入哦");
       }
     });
-    bot.command("tictactoe", async (ctx) => {
+    this.bot.command("tictactoe", async (ctx) => {
       let result = `/new_tictactoe 创建一个新游戏\n`;
       result += `/join_tictactoe 加入游戏\n`;
 
@@ -53,7 +56,7 @@ export default class TictactoeGameManager {
 
     //call back functions
     for (let i = 0; i <= 8; i++) {
-      bot.action(`ttt${i}`, (ctx) => {
+      this.bot.action(`ttt${i}`, (ctx) => {
         if (ctx.chat) {
           const myGame = this.getMyGame(
             ctx.chat.id,
