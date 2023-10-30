@@ -35,10 +35,7 @@ export default class RegularMedicationReminder {
 
         const task = corm.schedule("* * 4 * * *", () => {
             grouplist.forEach(g => {
-                hitokotoUtil().then((data: any) => {
-                    this.bot.telegram.sendMessage(g.id, "我是吃药小助手: 吃药了!吃药了! 温馨提示 ,快快吃药!!! 吃药 吃药")
-                });
-
+                this.bot.telegram.sendMessage(g.id, "我是吃药小助手: 吃药了!吃药了! 温馨提示 ,快快吃药!!! 吃药 吃药")
             })
         }, {
             scheduled: false
